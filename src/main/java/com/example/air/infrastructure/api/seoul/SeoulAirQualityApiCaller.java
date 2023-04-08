@@ -11,6 +11,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -70,11 +71,41 @@ public class SeoulAirQualityApiCaller {
 
     // TODO: 자치구 목록 정보 변환 함수
     private List<AirQualityInfo.GuAirQualityInfo> convert(List<SeoulAirQualityApiDto.Row> rows) {
-        return null;
+        List<AirQualityInfo.GuAirQualityInfo> list = new ArrayList<>();
+
+        for(SeoulAirQualityApiDto.Row row: rows){
+            AirQualityInfo.GuAirQualityInfo info = AirQualityInfo.GuAirQualityInfo.builder()
+                    .guName(row.getSite())
+                    .pm25(row.getPm25())
+                    .pm25Grade(AirQualityGradeUtil.getPm25Grade((double)row.getPm25()))
+                    .pm10(row.getPm10())
+                    .pm10Grade(AirQualityGradeUtil.getPm10Grade((double)row.getPm10()))
+                    .o3(row.getO3())
+                    .o3Grade(AirQualityGradeUtil.getO3Grade(row.getO3()))
+                    .no2(row.getNo2())
+                    .no2Grade(AirQualityGradeUtil.getNo2Grade(row.getNo2()))
+                    .co(row.getCo())
+                    .coGrade(AirQualityGradeUtil.getCoGrade(row.getCo()))
+                    .so2(row.getSo2())
+                    .so2Grade(AirQualityGradeUtil.getSo2Grade(row.getSo2()))
+                    .build();
+
+            list.add(info);
+
+        }
+        return list;
     }
 
     // TODO: 자치구 목록으로 pm10(미세먼지) 평균값을 구하는 함수
     private Double averagePm10(List<SeoulAirQualityApiDto.Row> rows) {
-        return null;
+        double sum = 0;
+
+        for(SeoulAirQualityApiDto.Row row : rows){
+            sum += row.getPm10();
+        }
+
+        double avg = sum / rows.size();
+
+        return avg;
     }
 }
