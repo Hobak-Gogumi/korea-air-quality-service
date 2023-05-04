@@ -16,6 +16,6 @@ public class AirQualityApiController {
     // TODO: 시도와 구정보를 parameter 로 받는 GET API 작성
     @GetMapping("/api/v1/air-quality/{city}")
     public AirQualityInfo getAirQualityInfo(@PathVariable String city, @RequestParam(required=false) String gu) {
-        return airQualityService.getAirQualityInfo(gu);
+        return airQualityService.getAirQualityInfo(city, gu);
     }
 }

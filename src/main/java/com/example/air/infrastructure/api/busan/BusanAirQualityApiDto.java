@@ -22,11 +22,7 @@ public class BusanAirQualityApiDto {
     @ToString
     public static class Response {
         private Header header;
-        @JsonProperty("item")
-        private List<Item> items;
-        private Integer numOfRows;
-        private Integer pageNo;
-        private Integer totalCount;
+        private Body body;
 
         public boolean isSuccess() {
             if (Objects.equals(header.getCode(), "00")) {
@@ -40,14 +36,33 @@ public class BusanAirQualityApiDto {
     @Setter
     @ToString
     public static class Header {
+        @JsonProperty("resultCode")
         private String code;
+        @JsonProperty("resultMsg")
         private String message;
     }
 
     @Getter
     @Setter
     @ToString
-    public static class Item {
+    public static class Body{
+        private Items items;
+        private Integer numOfRows;
+        private Integer pageNo;
+        private Integer totalCount;
+    }
+
+    @Getter
+    @Setter
+    @ToString
+    public static class Items{
+        private List<Row> item;
+    }
+
+    @Getter
+    @Setter
+    @ToString
+    public static class Row {
         private String site;
         private String areaIndex;
         @JsonProperty("controlnumber")
