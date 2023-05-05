@@ -2,6 +2,7 @@ package com.example.air.infrastructure.api.seoul;
 
 import com.example.air.application.AirQualityInfo;
 import com.example.air.application.util.AirQualityGradeUtil;
+import com.example.air.infrastructure.api.AirQualityApiCaller;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @Slf4j
 @Component
-public class SeoulAirQualityApiCaller {
+public class SeoulAirQualityApiCaller implements AirQualityApiCaller {
     private final SeoulAirQualityApi seoulAirQualityApi;
 
     public SeoulAirQualityApiCaller(@Value("${api.seoul.base-url}") String baseUrl) {
