@@ -2,18 +2,17 @@ package com.example.air.application;
 
 import com.example.air.infrastructure.api.AirQualityApiCaller;
 import com.example.air.infrastructure.api.AirQualityApiCallerFactory;
-import com.example.air.infrastructure.api.busan.BusanAirQualityApiCaller;
-import com.example.air.infrastructure.api.seoul.SeoulAirQualityApiCaller;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class AirQualityService {
-    private final SeoulAirQualityApiCaller seoulAirQualityApiCaller;
-    private final BusanAirQualityApiCaller busanAirQualityApiCaller;
+
     private final AirQualityApiCallerFactory airQualityApiCallerFactory;
 
+    @Cacheable(cacheNames= "airQuality", key = "#city + #gu + T(java.time.LocalTime).now().getHour().toString()")
     public AirQualityInfo getAirQualityInfo(String city, String gu) {
         AirQualityInfo airQualityInfo;
 
